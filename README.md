@@ -1,2 +1,2 @@
 # node-api-boilerplate
-A boilerplate of a NodeJS api
+A NodeJS api boilerplate using Typescript

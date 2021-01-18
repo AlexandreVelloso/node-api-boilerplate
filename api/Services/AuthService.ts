@@ -1,4 +1,4 @@
-import UserCredentials from "../DTOs/UserCredentialsDto";
+import UserCredentials from "../DTOs/UserCredentialsDTO";
 
 interface AuthService {
 

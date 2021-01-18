@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { verify } from '../Utils/JwtToken';
-import UserCredentials from '../DTOs/UserCredentialsDto';
+import UserCredentials from '../DTOs/UserCredentialsDTO';
 
 class JwtMiddleware {
     static handle(req: any, res: Response, next: any) {

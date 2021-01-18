@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 
 import AuthService from '../Services/AuthService';
 import ErrorHandlerMiddleware from '../Middleware/ErrorHandlerMiddleware';
-import UserCredentials from '../DTOs/UserCredentialsDto';
+import UserCredentials from '../DTOs/UserCredentialsDTO';
 import BaseValidator from '../Validators/BaseValidator';
 
 class AuthController {

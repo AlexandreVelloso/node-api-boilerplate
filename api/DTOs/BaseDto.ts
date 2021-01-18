@@ -1,18 +1,18 @@
-abstract class BaseDto {
-    static modelToDto(_model: any): any {
+abstract class BaseDTO {
+    static modelToDTO(_model: any): any {
         throw new Error("Method not implemented.");
     }
 
-    static toDto(t: any): any;
-    static toDto(t: any[]): any[];
+    static toDTO(t: any): any;
+    static toDTO(t: any[]): any[];
 
-    static toDto(t: any): any {
+    static toDTO(t: any): any {
         if (Array.isArray(t)) {
-            return t.map(model => this.modelToDto(model));
+            return t.map(model => this.modelToDTO(model));
         }
 
-        return this.modelToDto(t);
+        return this.modelToDTO(t);
     }
 }
 
-export default BaseDto;
+export default BaseDTO;

@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import ErrorHandlerMiddleware from '../Middleware/ErrorHandlerMiddleware';
-import { LoginCredentials } from '../DTOs/UserCredentialsDto';
+import { LoginCredentials } from '../DTOs/UserCredentialsDTO';
 
 abstract class BaseController {
     public async index(req: any, res: Response) {

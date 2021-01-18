@@ -5,7 +5,7 @@ import { sign } from '../../Utils/JwtToken';
 import ValidationException from '../../Exceptions/ValidationException';
 import UnauthorizedOperationException from '../../Exceptions/UnauthorizedOperationException';
 import AuthService from '../AuthService';
-import UserCredentials from '../../DTOs/UserCredentialsDto';
+import UserCredentials from '../../DTOs/UserCredentialsDTO';
 import UserRepository from '../../Repositories/UserRepository';
 
 class AuthServiceImpl implements AuthService {

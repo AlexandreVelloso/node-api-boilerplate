@@ -1,11 +1,11 @@
 import { createContainer, asClass, Lifetime, AwilixContainer, asValue } from 'awilix';
-import AuthController from './Controllers/AuthController';
+import AuthController from '../Controllers/AuthController';
 
-import UserRepositoryImpl from './Repositories/impl/UserRepositoryImpl';
-import AuthServiceImpl from './Services/impl/AuthServiceImpl';
-import AuthLoginValidator from './Validators/AuthLoginValidator';
-import AuthRefreshTokenValidator from './Validators/AuthRefreshTokenValidator';
-import AuthRegisterValidator from './Validators/AuthRegisterValidator';
+import UserRepositoryImpl from '../Repositories/impl/UserRepositoryImpl';
+import AuthServiceImpl from '../Services/impl/AuthServiceImpl';
+import AuthLoginValidator from '../Validators/AuthLoginValidator';
+import AuthRefreshTokenValidator from '../Validators/AuthRefreshTokenValidator';
+import AuthRegisterValidator from '../Validators/AuthRegisterValidator';
 
 function createAppContainer(): AwilixContainer {
     const container = createContainer();

@@ -1,16 +1,16 @@
-import AuthService from "../../api/Services/AuthService";
-import AuthServiceImpl from "../../api/Services/impl/AuthServiceImpl";
-import ValidationException from "../../api/Exceptions/ValidationException";
-import { sign } from "../../api/Utils/JwtToken";
-import UnauthorizedOperationException from "../../api/Exceptions/UnauthorizedOperationException";
+import AuthService from '../../api/Services/AuthService';
+import AuthServiceImpl from '../../api/Services/impl/AuthServiceImpl';
+import ValidationException from '../../api/Exceptions/ValidationException';
+import UnauthorizedOperationException from '../../api/Exceptions/UnauthorizedOperationException';
+import UserRepositoryImpl from '../../api/Repositories/impl/UserRepositoryImpl';
 
-import MockUserRepository from "../__mocks__/Repositories/MockUserRepository";
+jest.mock('../../api/Repositories/impl/UserRepositoryImpl');
 
 let authService: AuthService;
 
 beforeAll(() => {
     authService = new AuthServiceImpl({
-        userRepository: new MockUserRepository(),
+        userRepository: new UserRepositoryImpl(),
     });
 });
 

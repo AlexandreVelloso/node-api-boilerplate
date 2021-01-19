@@ -1,6 +1,6 @@
 abstract class BaseDTO {
     static modelToDTO(_model: any): any {
-        throw new Error("Method not implemented.");
+        throw new Error('Method not implemented.');
     }
 
     static toDTO(t: any): any;

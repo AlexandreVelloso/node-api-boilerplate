@@ -1,6 +1,6 @@
-import UserModel from "../../../database/models/UserModel";
-import UserRepository from "../UserRepository";
-import { Transaction } from "objection";
+import UserModel from '../../../database/models/UserModel';
+import UserRepository from '../UserRepository';
+import { Transaction } from 'objection';
 
 class UserRepositoryImpl implements UserRepository {
 

@@ -1,5 +1,5 @@
-import BaseRepository from "./BaseRepository";
-import UserModel from "../../database/models/UserModel";
+import BaseRepository from './BaseRepository';
+import UserModel from '../../database/models/UserModel';
 
 interface UserRepository extends BaseRepository<UserModel> {
 

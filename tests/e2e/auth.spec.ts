@@ -1,12 +1,11 @@
 import request from 'supertest';
 import { matchersWithOptions } from 'jest-json-schema';
 
-import connection from "../../database/connection";
-import { sign } from "../../api/Utils/JwtToken";
+import connection from '../../database/connection';
 import app from '../../api/app';
 import errorSchema from '../schemas/ErrorSchema.json';
 import loginResponseSchema from '../schemas/LoginResponseSchema.json';
-import { generateUser, generateUserWithDefaultPassword } from '../__fakers__/UserFaker';
+import { generateUser, generateUserWithDefaultPassword } from '../../database/models/__fakers__/UserModel';
 
 beforeAll(async () => {
     expect.extend(matchersWithOptions({
@@ -273,7 +272,7 @@ describe('Refresh token', () => {
     afterEach(async () => {
         await connection.migrate.rollback();
     });
-    
+
     it('should refresh user token', async () => {
         const user = await generateUser('name', 'a@a.com');
 

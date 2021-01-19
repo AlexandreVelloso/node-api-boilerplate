@@ -1,4 +1,4 @@
-import UserRepository from "../../../api/Repositories/UserRepository";
+import UserRepository from '../../UserRepository';
 
 class MockUserRepository implements UserRepository {
 

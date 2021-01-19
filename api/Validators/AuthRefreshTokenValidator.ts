@@ -1,7 +1,7 @@
-import Joi from "@hapi/joi";
+import Joi from '@hapi/joi';
 
-import BaseValidator from "./BaseValidator";
-import ValidationException from "../Exceptions/ValidationException";
+import BaseValidator from './BaseValidator';
+import ValidationException from '../Exceptions/ValidationException';
 
 class AuthRefreshTokenValidator implements BaseValidator {
 

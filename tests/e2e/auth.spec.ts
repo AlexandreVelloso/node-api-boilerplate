@@ -5,7 +5,7 @@ import connection from '../../database/connection';
 import app from '../../api/app';
 import errorSchema from '../schemas/ErrorSchema.json';
 import loginResponseSchema from '../schemas/LoginResponseSchema.json';
-import { generateUser, generateUserWithDefaultPassword } from '../../database/models/__fakers__/UserModel';
+import { generateUser, generateUserWithDefaultPassword } from '../utils/GenerateUserModel';
 
 beforeAll(async () => {
     expect.extend(matchersWithOptions({

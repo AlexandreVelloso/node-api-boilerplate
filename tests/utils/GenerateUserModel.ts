@@ -1,6 +1,6 @@
 import faker from 'faker';
 
-import UserModel from '../UserModel';
+import UserModel from '../../database/models/UserModel';
 
 export async function generateUser(name?: string, email?: string) {
     return await UserModel.query()

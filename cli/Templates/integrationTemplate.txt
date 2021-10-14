@@ -117,7 +117,7 @@ describe('Create - {ResourceName}', () => {
     });
 
     it('deve conseguir criar um {SingleResource}', async () => {
-        const {SingleResource} = await {SingleResource}Service.create('Nome', 'email', new Date(), '12345678', '123456789', 5);
+        const {SingleResource} = await {SingleResource}Service.create('field');
 
         expect({SingleResource}).toMatchSchema({ResourceName}Schema);
 

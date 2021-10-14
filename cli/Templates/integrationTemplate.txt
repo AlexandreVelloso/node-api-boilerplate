@@ -61,7 +61,7 @@ describe('Index - {ResourceName}', () => {
             ]);
     });
 
-    it('deve conseguir buscar {SingleResource} pelo {SingleResource}Id', async () => {
+    it('deve conseguir buscar {SingleResource}', async () => {
         const result = await {SingleResource}Service.index();
 
         const {SingleResource}ArraySchema = {
@@ -83,7 +83,7 @@ describe('Index - {ResourceName}', () => {
 });
 
 describe('Get - {ResourceName}', () => {
-    it('deve conseguir encontrar {SingleResource}', async () => {
+    it('deve conseguir encontrar {SingleResource} pelo {SingleResource}Id', async () => {
         const {SingleResource} = await {SingleResource}Service.get(1);
 
         expect({SingleResource}).toMatchSchema({ResourceName}Schema);

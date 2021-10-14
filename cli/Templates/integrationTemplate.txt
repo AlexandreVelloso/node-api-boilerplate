@@ -80,18 +80,6 @@ describe('Index - {ResourceName}', () => {
         expect(mock{ResourceName}Repository.get)
             .toHaveBeenCalledTimes(1);
     });
-
-    it('deve retornar um array vazio quando não encontrar o {SingleResource} pelo nome', async () => {
-        {ResourceName}Repository.prototype.get =
-            jest.fn().mockReturnValue([]);
-
-        const result = await {SingleResource}Service.index('nao encontrar');
-
-        expect(result).toEqual([]);
-
-        expect(mock{ResourceName}Repository.get)
-            .toHaveBeenCalledTimes(1);
-    });
 });
 
 describe('Get - {ResourceName}', () => {

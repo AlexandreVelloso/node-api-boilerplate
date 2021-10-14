@@ -1,0 +1,200 @@
+import { matchersWithOptions } from 'jest-json-schema';
+
+import {ResourceName}Schema from '../schemas/{ResourceName}Schema.json';
+import ErrorSchema from '../schemas/ErrorSchema.json';
+import {ResourceName}Repository from '../../api/Repositories/{ResourceName}Repository';
+import {ResourceName}Service from '../../api/Services/{ResourceName}Service';
+import EntityNotFoundException from '../../api/Exceptions/EntityNotFoundException';
+
+const {SingleResource}Service = new {ResourceName}Service({
+    {SingleResource}Repository: new {ResourceName}Repository(),
+});
+
+let mock{ResourceName}Repository = {ResourceName}Repository.prototype;
+
+// Mock repository calls
+beforeAll(() => {
+    {ResourceName}Repository.prototype.findById =
+        jest.fn().mockImplementation((id: number) => {
+            if (id <= 0 || id > 1000) {
+                return undefined;
+            }
+
+            return {
+                {SingleResource}_id: 1,
+                field: 'field',
+                created_at: null,
+                updated_at: null,
+            }
+        });
+});
+
+beforeAll(() => {
+    expect.extend(matchersWithOptions({
+        schemas: [ErrorSchema, {ResourceName}Schema],
+    }));
+});
+
+describe('Validate schemas', () => {
+    test('Validate schemas', () => {
+        expect(ErrorSchema).toBeValidSchema();
+        expect({ResourceName}Schema).toBeValidSchema();
+    });
+})
+
+describe('Index - {ResourceName}', () => {
+    beforeAll(() => {
+        {ResourceName}Repository.prototype.get =
+            jest.fn().mockReturnValue([
+                {
+                    {SingleResource}_id: 1,
+                    field: 'field',
+                    created_at: null,
+                    updated_at: null,
+                },
+                {
+                    {SingleResource}_id: 2,
+                    field: 'field',
+                    created_at: null,
+                    updated_at: null,
+                }
+            ]);
+    });
+
+    it('deve conseguir buscar {SingleResource} pelo {SingleResource}Id', async () => {
+        const result = await {SingleResource}Service.index();
+
+        const {SingleResource}ArraySchema = {
+            $ref: '{SingleResource}#/definitions/arrayOf{ResourceName}',
+        };
+
+        expect({SingleResource}ArraySchema).toBeValidSchema();
+        expect(result).toMatchSchema({SingleResource}ArraySchema);
+        expect(result).toHaveLength(2);
+
+        const {SingleResource} = result[0];
+
+        expect({SingleResource}.{SingleResource}Id).toBe(1);
+        expect({SingleResource}.field).toBe('field');
+
+        expect(mock{ResourceName}Repository.get)
+            .toHaveBeenCalledTimes(1);
+    });
+
+    it('deve retornar um array vazio quando não encontrar o {SingleResource} pelo nome', async () => {
+        {ResourceName}Repository.prototype.get =
+            jest.fn().mockReturnValue([]);
+
+        const result = await {SingleResource}Service.index('nao encontrar');
+
+        expect(result).toEqual([]);
+
+        expect(mock{ResourceName}Repository.get)
+            .toHaveBeenCalledTimes(1);
+    });
+});
+
+describe('Get - {ResourceName}', () => {
+    it('deve conseguir encontrar {SingleResource}', async () => {
+        const {SingleResource} = await {SingleResource}Service.get(1);
+
+        expect({SingleResource}).toMatchSchema({ResourceName}Schema);
+
+        expect({SingleResource}.{SingleResource}Id).toBe(1);
+        expect({SingleResource}.field).toBe('field');
+
+        expect(mock{ResourceName}Repository.findById)
+            .toHaveBeenCalledTimes(1);
+    });
+
+    it('deve retornar erro quando não encontrar {SingleResource}', async () => {
+        await expect({SingleResource}Service.get(9999))
+            .rejects
+            .toThrow(new EntityNotFoundException('{ResourceName} com id 9999 não foi encontrado'));
+
+        expect(mock{ResourceName}Repository.findById)
+            .toHaveBeenCalledTimes(1);
+    });
+});
+
+describe('Create - {ResourceName}', () => {
+    beforeAll(() => {
+        {ResourceName}Repository.prototype.create =
+            jest.fn().mockReturnValue({
+                {SingleResource}_id: 1,
+                field: 'field',
+                created_at: null,
+                updated_at: null,
+            });
+    });
+
+    it('deve conseguir criar um {SingleResource}', async () => {
+        const {SingleResource} = await {SingleResource}Service.create('Nome', 'email', new Date(), '12345678', '123456789', 5);
+
+        expect({SingleResource}).toMatchSchema({ResourceName}Schema);
+
+        expect({SingleResource}.{SingleResource}Id).toBe(1);
+        expect({SingleResource}.field).toBe('field');
+
+        expect(mock{ResourceName}Repository.create)
+            .toHaveBeenCalledTimes(1);
+    });
+});
+
+describe('Update - {ResourceName}', () => {
+    beforeAll(() => {
+        {ResourceName}Repository.prototype.update =
+            jest.fn().mockImplementation();
+    });
+
+    it('deve conseguir atualizar um {SingleResource}', async () => {
+        const {SingleResource} = await {SingleResource}Service.update(1, 'field');
+
+        expect({SingleResource}).toMatchSchema({ResourceName}Schema);
+
+        expect(mock{ResourceName}Repository.findById)
+            .toHaveBeenCalledTimes(1);
+        expect(mock{ResourceName}Repository.update)
+            .toHaveBeenCalledTimes(1);
+    });
+
+    it('deve retornar erro quando não encontrar o {SingleResource}', async () => {
+        await expect({SingleResource}Service.update(9999, 'field'))
+            .rejects
+            .toThrow(new EntityNotFoundException('{ResourceName} com id 9999 não foi encontrado'));
+
+        expect(mock{ResourceName}Repository.findById)
+            .toHaveBeenCalledTimes(1);
+        expect(mock{ResourceName}Repository.update)
+            .toHaveBeenCalledTimes(0);
+    });
+});
+
+describe('Delete - {ResourceName}', () => {
+    beforeAll(() => {
+        {ResourceName}Repository.prototype.delete =
+            jest.fn().mockImplementation();
+    });
+
+    it('deve conseguir deletar um {SingleResource}', async () => {
+        const result = await {SingleResource}Service.delete(1);
+
+        expect(result).toBeUndefined();
+
+        expect(mock{ResourceName}Repository.findById)
+            .toHaveBeenCalledTimes(1);
+        expect(mock{ResourceName}Repository.delete)
+            .toHaveBeenCalledTimes(1);
+    });
+
+    it('deve retornar erro quando {SingleResource} não for encontrado', async () => {
+        await expect({SingleResource}Service.delete(9999))
+            .rejects
+            .toThrow(new EntityNotFoundException('{ResourceName} com id 9999 não foi encontrado'));
+
+        expect(mock{ResourceName}Repository.findById)
+            .toHaveBeenCalledTimes(1);
+        expect(mock{ResourceName}Repository.delete)
+            .toHaveBeenCalledTimes(0);
+    });
+});

@@ -1,0 +1,17 @@
+import faker from 'faker';
+import moment from 'moment';
+
+import {ResourceName}Model from '../../database/models/{ResourceName}Model';
+
+export async function generate{ResourceName}(field?:any, createdAt?: Date) {
+    return await {ResourceName}Model.query()
+        .insert({
+            field: field ? field : faker.name.firstName,
+            created_at: createdAt ? createdAt : moment().toDate(),
+        });
+}
+
+export async function find{ResourceName}(id: number) {
+    return await {ResourceName}Model.query()
+        .findById(id);
+}

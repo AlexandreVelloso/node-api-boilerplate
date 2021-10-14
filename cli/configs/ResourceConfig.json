@@ -61,7 +61,7 @@
             "extension": "json"
         },
         {
-            "name": "utils",
+            "name": "util",
             "path": "tests/utils",
             "fileSuffix": "Model",
             "extension": "ts"

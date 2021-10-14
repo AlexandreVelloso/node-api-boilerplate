@@ -1,0 +1,36 @@
+{
+    "$id": "{SingleResource}",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "description": "{ResourceName} response",
+    "definitions": {
+        "{SingleResource}": {
+            "type": "object",
+            "properties": {
+                "{SingleResource}Id": {
+                    "type": "integer"
+                },
+                "field": {
+                    "type": "string"
+                }
+                "created_at": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "{SingleResource}Id",
+                "field",
+                "created_at",
+                "updated_at"
+            ]
+        },
+        "arrayOf{ResourceName}": {
+            "type": "array",
+            "items": {
+                "$ref": "{SingleResource}"
+            }
+        }
+    }
+}

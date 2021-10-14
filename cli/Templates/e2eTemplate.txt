@@ -1,0 +1,265 @@
+import request from 'supertest';
+import { matchersWithOptions } from 'jest-json-schema';
+
+import connection from '../../database/connection';
+import app from '../../api/app';
+import ErrorSchema from '../schemas/ErrorSchema.json';
+import {ResourceName}Schema from '../schemas/{ResourceName}Schema.json';
+import { generate{ResourceName}, find{ResourceName} } from '../utils/{ResourceName}Model';
+import { generateToken } from '../utils/token';
+import {ResourceName}DTO from '../../api/Dtos/{ResourceName}DTO';
+
+const accessToken = generateToken(1, 'John', 'firstUser@email.com');
+
+beforeAll(() => {
+    expect.extend(matchersWithOptions({
+        schemas: [ErrorSchema, {ResourceName}Schema],
+    }));
+});
+
+describe('Validate schemas', () => {
+    test('Validate schemas', () => {
+        expect(ErrorSchema).toBeValidSchema();
+        expect({ResourceName}Schema).toBeValidSchema();
+    });
+})
+
+describe('Index - {ResourceName}', () => {
+    beforeAll(async () => {
+        await connection.migrate.rollback();
+        await connection.migrate.latest();
+
+        const createdAt = new Date();
+        await generate{ResourceName}('field', createdAt);
+
+        createdAt.setDate(createdAt.getDate() + 1);
+        await generate{ResourceName}('field2', createdAt);
+    });
+
+    afterAll(async () => {
+        await connection.migrate.rollback();
+    });
+
+    it('deve conseguir buscar {ResourceName}', async () => {
+        const resposta = await request(app)
+            .get('/api/{ResourceName}')
+            .set('Authorization', accessToken);
+
+        const {ResourceName}ArraySchema = {
+            $ref: '{SingleResource}#/definitions/arrayOf{ResourceName}',
+        };
+
+        expect(resposta.status).toBe(200);
+        expect(resposta.body).toMatchSchema({ResourceName}ArraySchema);
+        expect(resposta.body).toHaveLength(2);
+
+        let {SingleResource}: {ResourceName}DTO = resposta.body[0];
+        expect({SingleResource}.{SingleResource}Id).toBe(2);
+        expect({SingleResource}.field).toEqual('field2');
+
+        {SingleResource} = resposta.body[1];
+        expect({SingleResource}.{SingleResource}Id).toBe(1);
+        expect({SingleResource}.field).toEqual('field');
+    });
+
+    it('deve retornar erro 401 quando o token é inválido', async () => {
+        const resposta = await request(app)
+            .get('/api/{ResourceName}');
+
+        expect(resposta.status).toBe(401);
+        expect(resposta.body).toMatchSchema(ErrorSchema);
+    });
+});
+
+describe('Get - {ResourceName}', () => {
+    beforeAll(async () => {
+        await connection.migrate.rollback();
+        await connection.migrate.latest();
+
+        await generate{ResourceName}('field');
+    });
+
+    afterAll(async () => {
+        await connection.migrate.rollback();
+    });
+
+    it('deve conseguir achar o {SingleResource} pelo id', async () => {
+        const resposta = await request(app)
+            .get('/api/{ResourceName}/1')
+            .set('Authorization', accessToken);
+
+        expect(resposta.status).toBe(200);
+        expect(resposta.body).toMatchSchema({ResourceName}Schema);
+
+        const {SingleResource}: {ResourceName}DTO = resposta.body;
+        expect({SingleResource}.{SingleResource}Id).toBe(1);
+        expect({SingleResource}.field).toEqual('field');
+    });
+
+    it('deve retornar erro 404 quando tentar encontrar um {SingleResource} que não existe', async () => {
+        const resposta = await request(app)
+            .get('/api/{ResourceName}/9999')
+            .set('Authorization', accessToken);
+
+        expect(resposta.status).toBe(404);
+        expect(resposta.body).toMatchSchema(ErrorSchema);
+        expect(resposta.body.error).toBe('{ResourceName} com id 9999 não foi encontrado');
+    });
+
+    it('deve retornar erro 400 quando o id do {SingleResource} é inválido', async () => {
+        const resposta = await request(app)
+            .get('/api/{ResourceName}/0')
+            .set('Authorization', accessToken);
+
+        expect(resposta.status).toBe(400);
+        expect(resposta.body).toMatchSchema(ErrorSchema);
+        expect(resposta.body.error).toBe('O campo \"id\" deve ser maior ou igual à 1');
+    });
+
+    it('deve retornar erro 401 quando o token é inválido', async () => {
+        const resposta = await request(app)
+            .get('/api/{ResourceName}/1');
+
+        expect(resposta.status).toBe(401);
+        expect(resposta.body).toMatchSchema(ErrorSchema);
+    });
+});
+
+describe('Create - {ResourceName}', () => {
+    beforeAll(async () => {
+        await connection.migrate.rollback();
+        await connection.migrate.latest();
+    });
+
+    afterAll(async () => {
+        await connection.migrate.rollback();
+    });
+
+    it('deve conseguir criar um {SingleResource}', async () => {
+        const resposta = await request(app)
+            .post('/api/{ResourceName}')
+            .set('Authorization', accessToken)
+            .send({
+                field: 'field',
+            });
+
+        expect(resposta.status).toBe(201);
+
+        const {SingleResource} = resposta.body;
+        expect({SingleResource}.{SingleResource}Id).toBe(1);
+        expect({SingleResource}.field).toEqual('field');
+    });
+
+    it('deve retornar erro 401 quando o token é inválido', async () => {
+        const resposta = await request(app)
+            .post('/api/{ResourceName}')
+            .send({
+                field: 'field',
+            });
+
+        expect(resposta.status).toBe(401);
+        expect(resposta.body).toMatchSchema(ErrorSchema);
+    });
+});
+
+describe('Update - {ResourceName}', () => {
+    beforeAll(async () => {
+        await connection.migrate.rollback();
+        await connection.migrate.latest();
+
+        await generate{ResourceName}('field');
+    });
+
+    afterAll(async () => {
+        await connection.migrate.rollback();
+    });
+
+    it('deve ser possível atualizar um {SingleResource}', async () => {
+        const resposta = await request(app)
+            .put('/api/{ResourceName}/1')
+            .set('Authorization', accessToken)
+            .send({
+                field: 'field'
+            });
+
+        const novo{ResourceName} = await find{ResourceName}(1);
+
+        expect(resposta.status).toBe(200);
+
+        const {SingleResource}: {ResourceName}DTO = resposta.body;
+        expect({SingleResource}).toMatchSchema({ResourceName}Schema);
+        expect({SingleResource}.field).toEqual(novo{ResourceName}.field);
+    });
+
+
+    it('deve retornar 404 quando o {SingleResource} não existe', async () => {
+        const resposta = await request(app)
+            .put('/api/{ResourceName}/9999')
+            .set('Authorization', accessToken)
+            .send({
+                nome: 'nome novo',
+                telefone: 'telefone novo',
+                cpfCnpj: 'cpf novo',
+                logo: 'logo novo'
+            });
+
+        expect(resposta.status).toBe(404);
+        expect(resposta.body).toMatchSchema(ErrorSchema);
+        expect(resposta.body.error).toBe('{ResourceName} com id 9999 não foi encontrado');
+    });
+
+    it('deve retornar erro 401 quando o token é inválido', async () => {
+        const resposta = await request(app)
+            .put('/api/{ResourceName}/1')
+            .send({
+                field: 'field',
+            });
+
+        expect(resposta.status).toBe(401);
+        expect(resposta.body).toMatchSchema(ErrorSchema);
+    });
+});
+
+describe('Delete - {ResourceName}', () => {
+    beforeAll(async () => {
+        await connection.migrate.rollback();
+        await connection.migrate.latest();
+
+        await generate{ResourceName}('field');
+    });
+
+    afterAll(async () => {
+        await connection.migrate.rollback();
+    });
+
+    it('deve conseguir apagar um {SingleResource}', async () => {
+        const resposta = await request(app)
+            .delete('/api/{ResourceName}/1')
+            .set('Authorization', accessToken);
+
+        expect(resposta.status).toBe(200);
+        expect(resposta.body).toEqual({});
+
+        const deletedUser = await find{ResourceName}(1);
+
+        expect(deletedUser).toBeUndefined();
+    });
+
+    it('deve retornar erro 404 quando o {SingleResource} não existe', async () => {
+        const resposta = await request(app)
+            .delete('/api/{ResourceName}/99999')
+            .set('Authorization', accessToken);
+
+        expect(resposta.status).toBe(404);
+        expect(resposta.body).toMatchSchema(ErrorSchema);
+        expect(resposta.body.error).toBe('{ResourceName} com id 99999 não foi encontrado');
+    });
+
+    it('deve retornar erro 401 quando o token é inválido', async () => {
+        const resposta = await request(app)
+            .delete('/api/{ResourceName}/1');
+
+        expect(resposta.status).toBe(401);
+        expect(resposta.body).toMatchSchema(ErrorSchema);
+    });
+});

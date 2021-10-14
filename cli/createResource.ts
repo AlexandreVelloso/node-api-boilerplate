@@ -39,12 +39,16 @@ ResourceConfig.folders.forEach(config => {
             createFile(config, 'ModelTemplate', resourceName);
             break;
         case 'e2eTest':
+            createFile(config, 'e2eTemplate', resourceName);
             break;
         case 'integration':
+            createFile(config, 'integrationTemplate', resourceName);
             break;
         case 'schema':
+            createFile(config, 'schemaTemplate', resourceName);
             break;
-        case 'utils':
+        case 'util':
+            createFile(config, 'utilTemplate', resourceName);
             break;
         default:
             break;
@@ -96,7 +100,7 @@ function saveFile(fileData: string, resourceName: string, config: any) {
 }
 
 function createResourceMigration(resourceName: string) {
-    exec("npx ", (error, stdout, stderr) => {
+    exec('knex migrate:make create_' + resourceName + 's_table', (error, stdout, stderr) => {
         if (error) {
             console.log(`error: ${error.message}`);
             return;

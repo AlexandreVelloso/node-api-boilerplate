@@ -13,6 +13,7 @@
     "@types/node": "^16.10.8"
   },
   "dependencies": {
+    "app-root-path": "^3.0.0",
     "knex": "^0.95.11",
     "sqlite3": "^5.0.2"
   }

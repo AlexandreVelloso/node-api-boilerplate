@@ -1,0 +1,64 @@
+import {ResourceName}DTO from "../Dtos/{ResourceName}DTO";
+import EntityNotFoundException from "../Exceptions/EntityNotFoundException";
+import {ResourceName}Repository from "../Repositories/{ResourceName}Repository";
+
+class {ResourceName}Service {
+
+    private {SingleResource}sRepository: {ResourceName}Repository;
+
+    public constructor(opts: any) {
+        this.{SingleResource}sRepository = opts.{SingleResource}sRepository;
+    }
+
+    public async index(): Promise<{ResourceName}DTO[]> {
+        const {SingleResource}s = await this.{SingleResource}sRepository.get();
+
+        return {ResourceName}DTO.toDTO({SingleResource}s);
+    }
+
+    public async get({SingleResource}Id: number): Promise<{ResourceName}DTO> {
+        const {SingleResource} = await this.{SingleResource}sRepository.findById({SingleResource}Id);
+
+        if (!{SingleResource}) {
+            throw new EntityNotFoundException(`Comprador com id ${{SingleResource}Id} não foi encontrado`);
+        }
+
+        return {ResourceName}DTO.toDTO({SingleResource});
+    }
+
+    public async create(field:any): Promise<{ResourceName}DTO> {
+        const {SingleResource} = await this.{SingleResource}sRepository.create(field);
+
+        return {ResourceName}DTO.toDTO({SingleResource});
+    }
+
+    public async update({SingleResource}Id: number, field:any): Promise<{ResourceName}DTO> {
+        const {SingleResource} = await this.{SingleResource}sRepository.findById({SingleResource}Id);
+
+        if (!{SingleResource}) {
+            throw new EntityNotFoundException(`Comprador com id ${{SingleResource}Id} não foi encontrado`);
+        }
+
+        await this.{SingleResource}sRepository
+            .update({SingleResource}Id, field);
+
+        {SingleResource}.field = field;
+
+        return {ResourceName}DTO.toDTO({SingleResource});
+    }
+
+    public async delete({SingleResource}Id: number): Promise<void> {
+        const {SingleResource} = await this.{SingleResource}sRepository
+            .findById({SingleResource}Id);
+
+        if (!{SingleResource}) {
+            throw new EntityNotFoundException(`{SingleResource} com id ${{SingleResource}Id} não foi encontrado`);
+        }
+
+        await this.{SingleResource}sRepository
+            .delete({SingleResource}Id);
+    }
+
+}
+
+export default {ResourceName}Service;

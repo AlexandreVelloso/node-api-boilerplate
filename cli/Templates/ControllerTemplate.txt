@@ -1,0 +1,80 @@
+import BaseController from './BaseController';
+import LoginCredentialsDTO from '../Dtos/LoginCredentialsDTO';
+import {ResourceName}DTO from '../Dtos/{ResourceName}DTO';
+import BaseValidator from '../Validators/BaseValidator';
+import {ResourceName}Service from '../Services/{ResourceName}Service';
+
+class {ResourceName}Controller extends BaseController {
+
+    private {ResourceName}Service: {ResourceName}Service;
+    private idValidator: BaseValidator;
+    private index{ResourceName}Validator: BaseValidator;
+    private create{ResourceName}Validator: BaseValidator;
+    private update{ResourceName}Validator: BaseValidator;
+
+    public constructor(opts: any) {
+        super();
+
+        this.idValidator = opts.idValidator;
+        this.index{ResourceName}Validator = opts.index{ResourceName}Validator;
+        this.create{ResourceName}Validator = opts.create{ResourceName}Validator;
+        this.update{ResourceName}Validator = opts.update{ResourceName}Validator;
+        this.{ResourceName}Service = opts.{ResourceName}Service;
+    }
+
+    protected async indexImpl(req: any, user: LoginCredentialsDTO): Promise<{ResourceName}DTO[]> {
+        const {
+            field,
+        } = this.index{ResourceName}Validator
+            .validate(req);
+
+        const {ResourceName}: {ResourceName}DTO[] = await this.{ResourceName}Service
+            .index(field);
+
+        return {ResourceName};
+    }
+
+    protected async getImpl(req: any, user: LoginCredentialsDTO): Promise<{ResourceName}DTO> {
+        const { id: {SingleResource}Id } = this.idValidator
+            .validate(req);
+
+        const {SingleResource}: {ResourceName}DTO = await this.{ResourceName}Service
+            .get({SingleResource}Id);
+
+        return {SingleResource};
+    }
+
+    protected async createImpl(req: any, user: LoginCredentialsDTO): Promise<{ResourceName}DTO> {
+        const {
+            field,
+        } = this.create{ResourceName}Validator
+            .validate(req);
+
+        const {SingleResource}: {ResourceName}DTO = await this.{ResourceName}Service
+            .create(field);
+
+        return {SingleResource};
+    }
+
+    protected async updateImpl(req: any, user: LoginCredentialsDTO): Promise<{ResourceName}DTO> {
+        const {
+            field,
+        } = this.update{ResourceName}Validator
+            .validate(req);
+
+        const {SingleResource}: {ResourceName}DTO = await this.{ResourceName}Service
+            .update(field);
+
+        return {SingleResource};
+    }
+
+    protected async deleteImpl(req: any, user: LoginCredentialsDTO): Promise<void> {
+        const { id: {SingleResource}Id } = this.idValidator
+            .validate(req);
+
+        await this.{ResourceName}Service.delete({SingleResource}Id);
+    }
+
+}
+
+export default {ResourceName}Controller;

@@ -1,0 +1,22 @@
+import { Model } from 'objection';
+
+class {ResourceName}Model extends Model {
+    {SingleResource}_id: any;
+    field: any;
+    created_at: any;
+    updated_at: any;
+
+    static get idColumn() {
+        return '{SingleResource}_id';
+    }
+
+    static get tableName() {
+        return '{SingleResource}s';
+    }
+
+    static get useLimitInFirst() {
+        return true;
+    }
+}
+
+export default {ResourceName}Model;

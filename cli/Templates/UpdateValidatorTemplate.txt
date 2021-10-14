@@ -1,0 +1,48 @@
+import Joi from "@hapi/joi";
+
+import BaseValidator from "./BaseValidator";
+import ValidationException from "../Exceptions/ValidationException";
+import messages from '../lang/pt/errors';
+
+class Update{ResourceName}Validator implements BaseValidator {
+
+    validate(req: any) {
+        const {
+            id: {SingleResource}Id,
+        } = req.params;
+
+        const {
+            field,
+        } = req.body;
+
+        const schema = Joi.object({
+            {SingleResource}Id: Joi.number()
+                .min(1)
+                .required(),
+
+            field: Joi.string()
+                .required(),
+        })
+            .messages(messages);
+
+        const validated = schema.validate({
+            compradorId,,
+            field,
+        }, {
+            stripUnknown: true,
+        });
+
+        if (validated.error) {
+            const errorMessage = validated.error
+                .details[0]
+                .message;
+
+            throw new ValidationException(errorMessage);
+        }
+
+        return validated.value;
+    }
+
+}
+
+export default Update{ResourceName}Validator;

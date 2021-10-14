@@ -1,0 +1,43 @@
+import { Transaction } from 'objection';
+
+import BaseRepository from "./BaseRepository";
+import {ResourceName}Model from "../../database/models/{ResourceName}Model";
+
+class {ResourceName}Repository implements BaseRepository<{ResourceName}Model>{
+
+    async findById({SingleResource}Id: number): Promise<{ResourceName}Model> {
+        return await {ResourceName}Model.query()
+            .findById({SingleResource}Id);
+    }
+
+    async get(): Promise<{ResourceName}Model[]> {
+
+        return await {ResourceName}Model.query()
+            .orderBy('created_at', 'desc');
+    }
+
+    async create(field:any): Promise<{ResourceName}Model> {
+            return await {ResourceName}Model.query(trx)
+                .insert({
+                    field,
+                });
+
+        });
+    }
+
+    async update({SingleResource}Id: number, field:any): Promise<void> {
+        await {ResourceName}Model.query()
+            .where('{SingleResource}_id', {SingleResource}Id)
+            .patch({
+                field,
+            });
+    }
+
+    async delete({SingleResource}Id: number): Promise<void> {
+        await {ResourceName}Model.query()
+            .where('{SingleResource}_id', {SingleResource}Id)
+            .delete();
+    }
+}
+
+export default {ResourceName}Repository;

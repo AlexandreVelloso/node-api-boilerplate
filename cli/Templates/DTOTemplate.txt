@@ -1,0 +1,32 @@
+import BaseDTO from "./BaseDTO";
+import {ResourceName}Model from "../../database/models/{ResourceName}Model";
+
+class {ResourceName}DTO extends BaseDTO {
+
+    public {SingleResource}Id: any;
+    public createdAt: any;
+    public updatedAt: any;
+
+    public constructor(
+        {SingleResource}Id: any,
+        createdAt: any,
+        updatedAt: any,
+    ) {
+        super();
+
+        this.{SingleResource}Id = {SingleResource}Id;
+        this.createdAt = createdAt ? createdAt : null;
+        this.updatedAt = updatedAt ? updatedAt : null;
+    }
+
+    static modelToDTO(model: {ResourceName}Model): {ResourceName}DTO {
+        return new {ResourceName}DTO(
+            model.{SingleResource}_id,
+            model.created_at,
+            model.updated_at,
+        );
+    }
+
+}
+
+export default {ResourceName}DTO;

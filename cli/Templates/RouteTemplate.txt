@@ -1,0 +1,20 @@
+import { Router } from 'express';
+import { AwilixContainer } from 'awilix';
+
+import {ResourceName}Controller from '../Controllers/{ResourceName}Controller';
+
+function create{ResourceName}Routes(container: AwilixContainer): Router {
+    const router = Router();
+
+    const {SingleResource}sController: {ResourceName}Controller = container.resolve('{SingleResource}sController');
+
+    router.get('/{SingleResource}s', (req, res) => {SingleResource}sController.index(req, res));
+    router.get('/{SingleResource}s/:id', (req, res) => {SingleResource}sController.get(req, res));
+    router.post('/{SingleResource}s', (req, res) => {SingleResource}sController.create(req, res));
+    router.put('/{SingleResource}s/:id', (req, res) => {SingleResource}sController.update(req, res));
+    router.delete('/{SingleResource}s/:id', (req, res) => {SingleResource}sController.delete(req, res));
+
+    return router;
+}
+
+export default create{ResourceName}Routes;

@@ -1,0 +1,70 @@
+{
+    "type": "Resource",
+    "folders": [
+        {
+            "name": "controller",
+            "path": "api/Controllers",
+            "fileSuffix": "Controller",
+            "extension": "ts"
+        },
+        {
+            "name": "dto",
+            "path": "api/Dtos",
+            "fileSuffix": "DTO",
+            "extension": "ts"
+        },
+        {
+            "name": "repository",
+            "path": "api/Repositories",
+            "fileSuffix": "Repository",
+            "extension": "ts"
+        },
+        {
+            "name": "route",
+            "path": "api/Routes",
+            "fileSuffix": "Routes",
+            "extension": "ts"
+        },
+        {
+            "name": "service",
+            "path": "api/Services",
+            "fileSuffix": "Service",
+            "extension": "ts"
+        },
+        {
+            "name": "validator",
+            "path": "api/Validators",
+            "fileSuffix": "Validator",
+            "extension": "ts"
+        },
+        {
+            "name": "model",
+            "path": "database/models",
+            "fileSuffix": "Model",
+            "extension": "ts"
+        },
+        {
+            "name": "e2eTest",
+            "path": "tests/e2e",
+            "extension": "spec.ts"
+        },
+        {
+            "name": "integration",
+            "path": "tests/integration",
+            "fileSuffix": "ServiceInteg",
+            "extension": "spec.ts"
+        },
+        {
+            "name": "schema",
+            "path": "tests/schema",
+            "fileSuffix": "Schema",
+            "extension": "json"
+        },
+        {
+            "name": "utils",
+            "path": "tests/utils",
+            "fileSuffix": "Model",
+            "extension": "ts"
+        }
+    ]
+}

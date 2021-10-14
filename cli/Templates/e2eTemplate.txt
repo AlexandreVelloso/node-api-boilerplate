@@ -197,10 +197,7 @@ describe('Update - {ResourceName}', () => {
             .put('/api/{ResourceName}/9999')
             .set('Authorization', accessToken)
             .send({
-                nome: 'nome novo',
-                telefone: 'telefone novo',
-                cpfCnpj: 'cpf novo',
-                logo: 'logo novo'
+                field: 'field',
             });
 
         expect(resposta.status).toBe(404);

@@ -1,5 +1,3 @@
-import { Transaction } from 'objection';
-
 import BaseRepository from "./BaseRepository";
 import {ResourceName}Model from "../../database/models/{ResourceName}Model";
 
@@ -17,12 +15,10 @@ class {ResourceName}Repository implements BaseRepository<{ResourceName}Model>{
     }
 
     async create(field:any): Promise<{ResourceName}Model> {
-            return await {ResourceName}Model.query(trx)
+            return await {ResourceName}Model.query()
                 .insert({
                     field,
                 });
-
-        });
     }
 
     async update({SingleResource}Id: number, field:any): Promise<void> {
